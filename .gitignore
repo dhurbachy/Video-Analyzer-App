@@ -1,0 +1,27 @@
+# --- Virtual Environments ---
+.venv/
+venv/
+ENV/
+env/
+
+# --- Python Cache and Temporary Files ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+
+# --- Operating System Files ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- IDE and Code Editor Settings ---
+.vscode/
+.idea/
+
+# --- Application Logs and Data ---
+*.log
+data/
+output/
