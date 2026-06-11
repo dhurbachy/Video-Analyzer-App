@@ -1,0 +1,8 @@
+# Core Frameworks
+crawl4ai>=0.8.9
+youtube-transcript-api>=0.6.0
+
+# Critical Dependencies for Python 3.13 / 3.14 Compatibility
+lxml>=6.0.2
+playwright>=1.40.0
+patchright>=1.60.1
