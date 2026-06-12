@@ -1,7 +1,7 @@
 import asyncio
 from crawl4ai import AsyncWebCrawler
 from youtube_transcript_api import YouTubeTranscriptApi 
-
+import streamlit as st
 async def main():
     # 1. Target YouTube Video ID
     # (This ID is the letters/numbers at the end of a YouTube URL)
@@ -41,5 +41,12 @@ async def main():
         print(f"❌ Failed to extract transcript. Reason: {e}")
         print("Note: Make sure the video has public English subtitles/captions enabled.")
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# if __name__ == "__main__":
+#     asyncio.run(main())
+
+st.set_page_config(page_title="Video Analyzer App", page_icon="🚀", layout="wide",initial_sidebar_state="expanded") # expanded, collapsed,auto
+st.title("Video Analayzer App")
+st.write("Extract clean Data")
+
+url_input=st.text_input("Enter Social Media Reel and Video Url", placeholder="https://...")
+platform_choice=st.selectbox("Select Target Platform",["You Tube","Instagram","Facebook","TikTok"])
