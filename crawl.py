@@ -2,47 +2,42 @@ import asyncio
 from crawl4ai import AsyncWebCrawler
 from youtube_transcript_api import YouTubeTranscriptApi 
 import streamlit as st
-async def main():
-    # 1. Target YouTube Video ID
-    # (This ID is the letters/numbers at the end of a YouTube URL)
-    video_id = "dQw4w9WgXcQ" 
-    video_url = f"https://www.youtube.com/watch?v={video_id}"
+import logging
+import re
+logging.basicConfig(
+    level=logging.INFO
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
-    print(f"[CRAWL] Starting analyzer engine for video link...")
-
-    # 2. Use Crawl4AI to fetch basic site metadata
-    async with AsyncWebCrawler() as crawler:
-        result = await crawler.arun(url=video_url)
-        if result.success:
-            print("✓ Web crawler connected to YouTube platform successfully.")
-        else:
-            print("⚠ Direct web connection blocked, switching to internal transcript pipeline.")
-
-    # 3. Use the Transcript API to extract the spoken words
-    print(f"[TRANSCRIPT] Fetching audio subtitles for ID: {video_id}...")
-    try:
-        # Pull the raw transcript data
-        api_instance=YouTubeTranscriptApi()
-        raw_transcript = api_instance.fetch(video_id)
-        raw_data=raw_transcript.to_raw_data()
+def extract_youtube_id(url:str)->str:
         
-        # Merge all separate text blocks into a clean paragraph
-        clean_text_list = [item['text'] for item in raw_data]
-        full_transcript = " ".join(clean_text_list)
+        pattern = r'(?:v=|\/shorts\/|\/embed\/|\/v\/|youtu\.be\/|\/watch\?v=)([^#\&\?]+)'
+        logging.info(f"Receieved Url :{url}")
+        match=re.search(pattern,url)
+        return match.group(1) if match else url
 
-        # 4. Display the final output
-        print("\n🎉 SUCCESS! Full Video Transcript Extracted:")
-        print("-" * 50)
-        print(full_transcript[:1000]) # Prints the first 1000 characters
-        print("\n... [Truncated for preview] ...")
-        print("-" * 50)
+async def main(url_input:str,platform_choice:str):
+    
+    # for You tube
+    if platform_choice=="You Tube":
+        try:
+            video_id=extract_youtube_id(url_input)
+            logging.info(f"Extracted Video Id:{video_id}")
+            api_instance=YouTubeTranscriptApi()
+            raw_transcript = api_instance.fetch(video_id)
+            raw_data=raw_transcript.to_raw_data()
+            
+            # Merge all separate text blocks into a clean paragraph
+            clean_text_list = [item['text'] for item in raw_data]
+            full_transcript = " ".join(clean_text_list)
+            return "You Tube Transcript Extracted", full_transcript
+        except Exception as e:
+          print(f"Failed to extract transcript. Reason: {e}")
+          print("Note: Make sure the video has public English subtitles/captions enabled.")
+    else:
+        logging.info(f"Initialize platform choice:{platform_choice}")
 
-    except Exception as e:
-        print(f"❌ Failed to extract transcript. Reason: {e}")
-        print("Note: Make sure the video has public English subtitles/captions enabled.")
 
-# if __name__ == "__main__":
-#     asyncio.run(main())
 
 st.set_page_config(page_title="Video Analyzer App", page_icon="🚀", layout="wide",initial_sidebar_state="expanded") # expanded, collapsed,auto
 st.title("Video Analayzer App")
