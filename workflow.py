@@ -35,7 +35,7 @@ workflow.add_node("analyze_psychology",analyze_psychology)
 workflow.add_node("generate_blueprint",generate_blueprint)
 
 workflow.set_entry_point("analyze_psychology")
-workflow.add_edge("analyze_psychology","generate_psychology")
+workflow.add_edge("analyze_psychology","generate_blueprint")
 workflow.add_edge("generate_blueprint",END)
 
 graph=workflow.compile()

@@ -11,7 +11,7 @@ transcript_input=st.text_area("Video Transcript",placeholder="Enter Words ...",h
 
 st.write("")
 
-col1,col2,col3=st.columns()
+col1,col2,col3=st.columns(3)
 
 with col2:
     submit_clicked=st.button("Run",type="primary",use_container_width=True)
