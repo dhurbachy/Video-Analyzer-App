@@ -1,10 +1,12 @@
 from state import AgentState
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.graph import StateGraph, END
+from dotenv import load_dotenv
 
-
+load_dotenv()
 def analyze_psychology(state: AgentState):
-    llm = ChatOpenAI(model="gpt-40-mini", api_key=" ")
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
     prompt = f"""
        Analyze the viral psychology of this script transcript. Identify:
         1. The core emotional trigger used (fear of missing out, curiosity, etc.).
@@ -17,7 +19,7 @@ def analyze_psychology(state: AgentState):
     return {"psychology_analysis":response.content}
 
 def generate_blueprint(state:AgentState):
-    llm=ChatOpenAI(model="gpt-40-mini", api_key=" ")
+    llm=ChatGoogleGenerativeAI(model="gemini-2.5-flash")
     prompt=f"""  
       Based on the following psychological profile, turn this video structure into an explicit copywriting blueprint formula.
       Provide a step-by-step structural template (e.g., Hook -> Problem -> Open Loop -> Secret -> CTA) so a writer can easily draft a completely new script.

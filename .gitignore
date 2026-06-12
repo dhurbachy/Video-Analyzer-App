@@ -25,3 +25,5 @@ desktop.ini
 *.log
 data/
 output/
+
+.env
