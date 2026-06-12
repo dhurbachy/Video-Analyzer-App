@@ -50,3 +50,16 @@ st.write("Extract clean Data")
 
 url_input=st.text_input("Enter Social Media Reel and Video Url", placeholder="https://...")
 platform_choice=st.selectbox("Select Target Platform",["You Tube","Instagram","Facebook","TikTok"])
+
+if st.button("Generate",type="primary"):
+    if not url_input.strip():
+        st.error("Please Provide video link here")
+    else:
+        with st.spinner("Processing Request ... Please Wait ..."):
+            header,content=asyncio.run(main(url_input,platform_choice))
+        st.subheader(header)
+        if "Error" in header:
+            st.error(header)
+        else:
+            st.text_area("Extracted Resulted Data:",value=content,height=400)
+            st.success("Extraction Finished Successfylly!")
