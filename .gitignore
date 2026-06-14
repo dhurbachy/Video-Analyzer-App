@@ -27,3 +27,4 @@ data/
 output/
 
 .env
+history_data/
