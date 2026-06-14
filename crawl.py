@@ -69,27 +69,27 @@ async def main(url_input:str,platform_choice:str):
 
 
 
-st.set_page_config(page_title="Video Analyzer App", page_icon="🚀", layout="wide",initial_sidebar_state="expanded") # expanded, collapsed,auto
-st.title("Video Analayzer App")
-st.write("Extract clean Data")
+# st.set_page_config(page_title="Video Analyzer App", page_icon="🚀", layout="wide",initial_sidebar_state="expanded") # expanded, collapsed,auto
+# st.title("Video Analayzer App")
+# st.write("Extract clean Data")
 
-col1,col2,col3=st.columns([5,2,2],vertical_alignment="bottom")
-with col1:
-    url_input=st.text_input("Enter Social Media Reel and Video Url", placeholder="https://...")
-with col2:
-    platform_choice=st.selectbox("Select Target Platform",["You Tube","Instagram","Facebook","TikTok"])
-with col3:
-  submit_clicked=st.button("Generate",type="primary")
+# col1,col2,col3=st.columns([5,2,2],vertical_alignment="bottom")
+# with col1:
+#     url_input=st.text_input("Enter Social Media Reel and Video Url", placeholder="https://...")
+# with col2:
+#     platform_choice=st.selectbox("Select Target Platform",["You Tube","Instagram","Facebook","TikTok"])
+# with col3:
+#   submit_clicked=st.button("Generate",type="primary")
 
-if submit_clicked:
-    if not url_input.strip():
-        st.error("Please Provide video link here")
-    else:
-        with st.spinner("Processing Request ... Please Wait ..."):
-            header,content=asyncio.run(main(url_input,platform_choice))
-        st.subheader(header)
-        if "Error" in header:
-            st.error(header)
-        else:
+# if submit_clicked:
+#     if not url_input.strip():
+#         st.error("Please Provide video link here")
+#     else:
+#         with st.spinner("Processing Request ... Please Wait ..."):
+#             header,content=asyncio.run(main(url_input,platform_choice))
+#         st.subheader(header)
+#         if "Error" in header:
+#             st.error(header)
+#         else:
             st.text_area("Extracted Resulted Data:",value=content,height=400)
             st.success("Extraction Finished Successfylly!")
